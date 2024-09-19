@@ -7,15 +7,16 @@ import {
   CardActions,
   Typography,
   Avatar,
-  IconButton,
   useMediaQuery,
   useTheme,
+  Divider,
 } from '@mui/material';
-import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, ChevronRight } from '@mui/icons-material';
+import { Add, Edit, Delete, ChevronRight } from '@mui/icons-material';
 import { useUserStore } from '../store/userStore';
 import { User } from '@/props/common';
 import UserDetails from './UserDetails';
 import UserForm from './UserForm';
+import { QRCodeSVG } from 'qrcode.react';
 
 const UserList: React.FC = () => {
   const { users, setUsers, addUser, updateUser, deleteUser } = useUserStore();
@@ -76,7 +77,7 @@ const UserList: React.FC = () => {
         data-testid="add-user-button"
         variant="contained"
         color="primary"
-        startIcon={<AddIcon />}
+        startIcon={<Add />}
         onClick={handleAddUser}
         sx={{ mb: 2, width: '100%', borderRadius: '8px', textTransform: 'none' }}
       >
@@ -87,9 +88,11 @@ const UserList: React.FC = () => {
           <Card
             key={user.id}
             sx={{
-              borderRadius: '16px',
-              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+              borderRadius: '20px',
+              boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
               transition: 'transform 0.3s ease',
+              background: 'rgba(255, 255, 255, 0.2)', // Semi-transparent background
+              backdropFilter: 'blur(10px)', // Blur effect for the card
               '&:hover': { transform: 'translateY(-5px)' },
             }}
           >
@@ -97,30 +100,38 @@ const UserList: React.FC = () => {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                flexDirection: isMobile ? 'column' : 'row',
+                flexDirection: 'column',
+                padding: 4,
               }}
             >
+              {/* Avatar */}
               <Avatar
                 src={`https://picsum.photos/seed/${user.id}/200`}
-                sx={{ width: 80, height: 80, mb: isMobile ? 2 : 0 }}
+                sx={{ width: 100, height: 100, mb: 2 }}
               />
-              <Box
-                sx={{
-                  ml: isMobile ? 0 : 2,
-                  textAlign: isMobile ? 'center' : 'left',
-                }}
-              >
-                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                  {user.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {user.email}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {user.phone}
-                </Typography>
-              </Box>
+
+              {/* Basic Info */}
+              <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                {user.name}
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                {user.email}
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                {user.phone}
+              </Typography>
+
+              {/* QR Code for Website */}
+              <Divider sx={{ my: 2, width: '80%' }} />
+              <QRCodeSVG
+                value={`https://example.com/${user.id}`}
+                size={100}
+                fgColor="#000"
+                bgColor="transparent"
+              />
             </CardContent>
+
+            {/* Card Actions */}
             <CardActions
               sx={{
                 justifyContent: 'space-between',
@@ -130,27 +141,27 @@ const UserList: React.FC = () => {
             >
               <Box>
                 <Button
-                  startIcon={<EditIcon />}
+                  startIcon={<Edit />}
                   onClick={() => handleEditUser(user)}
-                  variant="outlined"
+                  variant="text"
                   sx={{ mr: 1, textTransform: 'none' }}
                 >
                   Edit
                 </Button>
                 <Button
-                  startIcon={<DeleteIcon />}
+                  startIcon={<Delete />}
                   onClick={() => handleDeleteUser(user.id)}
                   color="error"
-                  variant="outlined"
+                  variant="text"
                   sx={{ textTransform: 'none' }}
                 >
                   Delete
                 </Button>
               </Box>
-              <IconButton color="primary" onClick={() => handleUserClick(user)}>
+              <Button color="primary" onClick={() => handleUserClick(user)}>
                 <small>Details</small>
                 <ChevronRight />
-              </IconButton>
+              </Button>
             </CardActions>
           </Card>
         ))}
