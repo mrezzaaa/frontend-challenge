@@ -54,6 +54,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
+Open [Live Demo](https://obs-frontend-challenge.vercel.app)
+
 ## Building for Production
 
 To create a production build:
