@@ -124,7 +124,7 @@ const UserList: React.FC = () => {
               {/* QR Code for Website */}
               <Divider sx={{ my: 2, width: '80%' }} />
               <QRCodeSVG
-                value={`https://example.com/${user.id}`}
+                value={`${user.website}`}
                 size={100}
                 fgColor="#000"
                 bgColor="transparent"
