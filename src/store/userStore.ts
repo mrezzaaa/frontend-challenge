@@ -1,5 +1,5 @@
-import {create} from 'zustand';
-import { User, UserStore } from '../props/common';
+import { create } from 'zustand';
+import { UserStore } from '../props/common';
 
 export const useUserStore = create<UserStore>((set) => ({
   users: [],
@@ -7,9 +7,7 @@ export const useUserStore = create<UserStore>((set) => ({
   addUser: (user) => set((state) => ({ users: [...state.users, user] })),
   updateUser: (id, updatedUser) =>
     set((state) => ({
-      users: state.users.map((user) =>
-        user.id === id ? { ...user, ...updatedUser } : user
-      ),
+      users: state.users.map((user) => (user.id === id ? { ...user, ...updatedUser } : user)),
     })),
   deleteUser: (id) =>
     set((state) => ({

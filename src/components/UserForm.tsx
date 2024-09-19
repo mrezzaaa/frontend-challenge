@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, useMediaQuery, Theme, useTheme } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Button,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { User, UserFormProps } from '@/props/common';
 
 const initialUserState: Omit<User, 'id'> = {
@@ -40,6 +49,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, open, onClose, onSubmit }) =>
         <DialogContent>
           <TextField
             autoFocus
+            data-testid="name-input"
             margin="dense"
             name="name"
             label="Name"
@@ -86,7 +96,13 @@ const UserForm: React.FC<UserFormProps> = ({ user, open, onClose, onSubmit }) =>
           <Button onClick={onClose} fullWidth={isMobile} sx={{ mr: isMobile ? 0 : 1 }}>
             Cancel
           </Button>
-          <Button type="submit" variant="contained" color="primary" fullWidth={isMobile} sx={{ ml: isMobile ? 0 : 1 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth={isMobile}
+            sx={{ ml: isMobile ? 0 : 1 }}
+          >
             {user ? 'Update' : 'Add'}
           </Button>
         </DialogActions>
